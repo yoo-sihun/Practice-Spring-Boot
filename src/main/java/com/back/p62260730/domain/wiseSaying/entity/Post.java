@@ -12,14 +12,14 @@ import lombok.Setter;
 @Getter // 어노테이션. 표식(자바, 프레임워크, IDE)
 @Entity
 @NoArgsConstructor
-public class WiseSaying {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String content;
     private String author;
 
-    public WiseSaying(String content, String author) {
+    public Post(String content, String author) {
         this.content = content;
         this.author = author;
     }

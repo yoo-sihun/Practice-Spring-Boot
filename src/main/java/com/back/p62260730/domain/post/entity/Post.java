@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Setter
 @Getter // 어노테이션. 표식(자바, 프레임워크, IDE)
 @Entity
@@ -21,11 +23,15 @@ public class Post {
     private int id; // int
     private String title; //varchar(255)
     private String body; //varchar(255)
+    private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
     // 엔티티 구조를 바꿀경우 ddl-auto 사용중일땐 파일 db파일 지웠다가 다시 rerun하기
-
 
     public Post(String title, String body) {
         this.title = title;
         this.body = body;
+        this.createDate = LocalDateTime.now();
+        this.modifyDate = createDate;
+
     }
 }

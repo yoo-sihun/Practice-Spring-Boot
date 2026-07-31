@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class BaseInit {
 
     @Autowired
-    private PostRepository postRepository;
+    private PostServie postService; // 창고 관리인
     @Bean
     public ApplicationRunner init() {
         return args -> {

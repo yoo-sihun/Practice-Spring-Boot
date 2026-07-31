@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Component
@@ -14,7 +15,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-// 트랜잭션 범위는 jpa가 제공하는 메서드 단위로 트랜잭션 기능이 잡힌다.
+
+    // 트랜잭션 범위는 jpa가 제공하는 메서드 단위로 트랜잭션 기능이 잡힌다.
     //jpa -> jakarta
     // @Transactional은 spring패키지 사용
     public Post write(String title, String body) {
@@ -25,6 +27,29 @@ public class PostService {
 
     public void delete(Post post) {
         postRepository.delete(post);
+    }
+
+    public void modify(Post post, String title, String content) {
+        post.setTitle(title);
+        post.setBody(content);
+        boolean isChanged = false;
+
+        if (!post.getTitle().equals(title)) {
+            post.setTitle(title);
+            isChanged = true;
+        }
+
+        if (!post.getBody().equals(content)) {
+            post.setBody(content);
+            isChanged = true;
+        }
+
+        if (isChanged) {
+            post.setModifyDate(LocalDateTime.now());
+        }
+
+        postRepository.save(post);
+
     }
 
     public Optional<Post> findById(int id) {

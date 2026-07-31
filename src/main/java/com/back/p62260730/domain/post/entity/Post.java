@@ -1,4 +1,4 @@
-package com.back.p62260730.domain.wiseSaying.entity;
+package com.back.p62260730.domain.post.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

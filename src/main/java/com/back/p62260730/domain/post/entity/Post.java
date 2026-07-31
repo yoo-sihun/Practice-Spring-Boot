@@ -15,17 +15,9 @@ import lombok.Setter;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String content;
-    private String author;
-
-    public Post(String content, String author) {
-        this.content = content;
-        this.author = author;
-    }
-
-    public boolean isNew() {
-        return id == 0;
-    }
+    private int id; // int
+    private String title; //varchar(255)
+    private String body; //varchar(255)
+    // 엔티티 구조를 바꿀경우 ddl-auto 사용중일땐 파일 db파일 지웠다가 다시 rerun하기
 
 }

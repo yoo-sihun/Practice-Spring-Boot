@@ -1,5 +1,5 @@
 server:
-  port: 8070
+  port: 8080
 
 spring:
   application:
@@ -20,3 +20,14 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    #터미널 빌드 창 색깔별로 구분
+    #output:
+    #  ansi:
+    #   enabled: always
+
+# 정보창 info = 일상정 정보
+# bind, extract : 눈으로 봐야하는 파라미터 볼 수 있게 해준다
+logging: # 입력되는 정보를 터미널에서 확인할 수 있게 해준다
+  level:
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.orm.jdbc.extract: TRACE

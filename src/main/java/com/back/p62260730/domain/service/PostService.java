@@ -2,20 +2,27 @@ package com.back.p62260730.domain.service;
 
 
 import com.back.p62260730.domain.post.entity.Post;
+import com.back.p62260730.domain.post.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
-// PostRepository 대신 사용
-// 비즈니스 로직 만든느 곳
+@RequiredArgsConstructor
 public class PostService {
+    private final PostRepository postRepository;
 
     public Post write(String title, String body) {
-        if(title.length() >= 100) {
-            System.out.println("제목은 100자 이하로 작성해주세요");
-            return null;
-        }
-
-        Post post1 = new Post(title, "내용1")
+        Post post = new Post(title, body);
+        return postRepository.save(post);
     }
 
+    public Optional<Post> findById(int id) {
+        return postRepository.findById(id);
+    }
+
+    public long count() {
+        return postRepository.count();
+    }
 }

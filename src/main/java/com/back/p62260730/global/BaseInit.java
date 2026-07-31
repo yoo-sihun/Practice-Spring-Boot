@@ -1,18 +1,23 @@
 package com.back.p62260730.global;
 
-import com.back.p62260730.domain.post.repository.PostRepository;
+import com.back.p62260730.domain.post.entity.Post;
 import com.back.p62260730.domain.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.transaction.annotation.Transactional;
 
 @Configuration // 빈 등록용
+@RequiredArgsConstructor
 public class BaseInit {
 
+    private final PostService postService; // 창고관리인
     @Autowired
-    private PostRepository postRepository;
-    private PostService postService; // 창고관리인
+    @Lazy
+    private BaseInit self;
 
     @Bean
     public ApplicationRunner init() {
@@ -20,9 +25,14 @@ public class BaseInit {
             System.out.println("초기화 작업을 수행합니다.");
             work1();
             work2();
+
+            new Thread(() -> {
+                self.work3();
+            }).start();
+
         };
     }
-
+    @Transactional
     void work1() {
 
             if(postService.count() > 0) {
@@ -30,13 +40,30 @@ public class BaseInit {
             }
 
             postService.write("제목1", "내용1");
+
+            if(true) {
+                throw new RuntimeException("테스트 예외");
+            }
             postService.write("제목2", "내용2");
 
 
         }
-
+        @Transactional(readOnly = true) // 조회용 메서드는 db변경을 하지 않는다
         void work2() {
             postService.findById(1);
             // select * from post where id = 1;
         }
+
+    @Transactional
+    void work3() {
+        Post post1 = postService.findById(1).get();
+        Post post2 = postService.findById(2).get();
+
+        postService.delete(post1);
+
+        if(true) {
+            throw new RuntimeException("테스트 예외");
+        }
+        postService.delete(post2);
+    }
     }

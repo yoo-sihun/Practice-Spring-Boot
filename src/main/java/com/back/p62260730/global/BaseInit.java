@@ -29,6 +29,7 @@ public class BaseInit {
 //            new Thread(() -> {
 //                self.work3();
 //            }).start();
+            self.work4();
 
         };
     }
@@ -41,10 +42,6 @@ public class BaseInit {
         }
 
         postService.write("제목1", "내용1");
-
-        if (true) {
-            throw new RuntimeException("테스트 예외");
-        }
         postService.write("제목2", "내용2");
 
 
@@ -73,7 +70,7 @@ public class BaseInit {
     @Transactional
     void work4() {
         Post post1 = postService.findById(1).get();
-        postService.modify(post1, "제목1-수정", "내용1-수정");
+        postService.modify(post1, "제목1-수정4", "내용1-수정4");
 
     }
 }

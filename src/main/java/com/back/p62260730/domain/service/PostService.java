@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Component
@@ -29,27 +28,8 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    public void modify(Post post, String title, String content) {
-        post.setTitle(title);
-        post.setBody(content);
-        boolean isChanged = false;
-
-        if (!post.getTitle().equals(title)) {
-            post.setTitle(title);
-            isChanged = true;
-        }
-
-        if (!post.getBody().equals(content)) {
-            post.setBody(content);
-            isChanged = true;
-        }
-
-        if (isChanged) {
-            post.setModifyDate(LocalDateTime.now());
-        }
-
-        postRepository.save(post);
-
+    public void modify(Post post, String title, String body) {
+        post.modify(title, body);
     }
 
     public Optional<Post> findById(int id) {
